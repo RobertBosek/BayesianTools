@@ -113,7 +113,10 @@
 <a href="#the-bayesian-setup" class="anchor"></a>The Bayesian Setup</h2>
 <p>The central object in the BT package is the BayesianSetup. This class contains the information about the model to be fit (likelihood), and the priors for the model parameters.</p>
 <p>A BayesianSetup is created by the createBayesianSetup function. The function expects a log-likelihood and (optional) a log-prior. It then automatically creates the posterior and various convenience functions for the samplers.</p>
-<p>Advantages of the BayesianSetup include 1) support for automatic parallelization, 2) functions are wrapped in try-catch statements to avoid crashes during long MCMC evaluations, 3) and the posterior checks if the parameter is outside the prior first, in which case the likelihood is not evaluated (makes the algorithms faster for slow likelihoods).</p>
+<p>Advantages of the BayesianSetup include
+1. support for automatic parallelization
+2. functions are wrapped in try-catch statements to avoid crashes during long MCMC evaluations
+3. and the posterior checks if the parameter is outside the prior first, in which case the likelihood is not evaluated (makes the algorithms faster for slow likelihoods).</p>
 <p>If no prior information is provided, an unbounded flat prior is created. If no explicit prior, but lower and upper values are provided, a standard uniform prior with the respective bounds is created, including the option to sample from this prior, which is useful for SMC and also for getting starting values. This option is used in the following example, which creates a multivariate normal likelihood density and a uniform prior for 3 parameters.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ll &lt;-<span class="st"> </span><span class="kw"><a href="../reference/generateTestDensityMultiNormal.html">generateTestDensityMultiNormal</a></span>(<span class="dt">sigma =</span> <span class="st">"no correlation"</span>)
 bayesianSetup =<span class="st"> </span><span class="kw"><a href="../reference/createBayesianSetup.html">createBayesianSetup</a></span>(<span class="dt">likelihood =</span> ll, <span class="dt">lower =</span> <span class="kw">rep</span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">3</span>), <span class="dt">upper =</span> <span class="kw">rep</span>(<span class="dv">10</span>, <span class="dv">3</span>))</code></pre></div>
@@ -337,7 +340,7 @@ BS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/createBa
 <li>lower / upper boundaries</li>
 <li>Additional info - best values, names of the parameters, …</li>
 </ul>
-<p>These information can passed by first creating an a extra object, via createPrior, or through the the createBayesianSetup function.</p>
+<p>These information can be passed by first creating an a extra object, via createPrior, or through the createBayesianSetup function.</p>
 <div id="creating-priors" class="section level4">
 <h4 class="hasAnchor">
 <a href="#creating-priors" class="anchor"></a>Creating priors</h4>
