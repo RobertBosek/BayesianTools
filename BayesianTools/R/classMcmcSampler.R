@@ -28,12 +28,12 @@ getSample.mcmcSampler <- function(sampler, parametersOnly = T, coda = F, start =
     if(thin > nrow(out)) warning("thin is greater than the total number of samples!")
     if (! thin == 1){
       sel = seq(1,dim(out)[1], by = thin )
-      out = out[sel,]
+      out = out[sel, ,drop=F] # fehlt!!!!!!!!!!!
     }
     
     # Sample size
     if(thin == 1 && !is.null(numSamples)){
-      out <- sampleEquallySpaced(out, numSamples)
+      out <- sampleEquallySpaced(out, numSamples) #colnames get lost here !!!!
     }
 
     # TODO - see matrix, need to check if both thing and numSamples is set 
@@ -193,7 +193,9 @@ summary.mcmcSampler <- function(object, ...){
   cat("# MCMC sampler: ",mcmcsampler, "\n")
   cat("# Nr. Chains: ", nrChain, "\n")
   cat("# Iterations per chain: ", nrIter, "\n")
-  cat("# Rejection rate: ", round(mean(coda::rejectionRate(chain)),3), "\n")
+  cat("# Rejection rate: ", ifelse(object$setup$numPars == 1 & class(chain) == "mcmc.list", # this is a hack because coda::rejectionRate does not work for 1-d MCMC lists
+                                   round(mean(sapply(chain, coda::rejectionRate)),3), 
+                                   round(mean(coda::rejectionRate(chain)),3) ), "\n")
   cat("# Effective sample size: ", ifelse(sampler$setup$numPars == 1, round(coda::effectiveSize(chain),0), round(mean(coda::effectiveSize(chain)),0) ) , "\n")
   cat("# Runtime: ", runtime, " sec.","\n", "\n")
   cat("# Parameters\n")
