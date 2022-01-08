@@ -28,12 +28,12 @@ getSample.mcmcSampler <- function(sampler, parametersOnly = T, coda = F, start =
     if(thin > nrow(out)) warning("thin is greater than the total number of samples!")
     if (! thin == 1){
       sel = seq(1,dim(out)[1], by = thin )
-      out = out[sel, ,drop=F] # fehlt!!!!!!!!!!!
+      out = out[sel, ,drop=F]
     }
     
     # Sample size
     if(thin == 1 && !is.null(numSamples)){
-      out <- sampleEquallySpaced(out, numSamples) #colnames get lost here !!!!
+      out <- sampleEquallySpaced(out, numSamples) # RB: here colnames get lost
     }
 
     # TODO - see matrix, need to check if both thing and numSamples is set 
